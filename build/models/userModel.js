@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var seekKeepSchema = new Schema({
+var userSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -36,6 +36,6 @@ var seekKeepSchema = new Schema({
     }
 });
 
-var SeekKeep = mongoose.model('SeekKeep', seekKeepSchema);
-module.exports = SeekKeep;
-//# sourceMappingURL=seekerKeeperModel.js.map
+var User = mongoose.model('User', userSchema);
+module.exports = User;
+//# sourceMappingURL=userModel.js.map

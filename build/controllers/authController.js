@@ -4,16 +4,16 @@ var _bookModel = require('../models/bookModel');
 
 var _bookModel2 = _interopRequireDefault(_bookModel);
 
-var _seekerKeeperModel = require('../models/seekerKeeperModel');
+var _userModel = require('../models/userModel');
 
-var _seekerKeeperModel2 = _interopRequireDefault(_seekerKeeperModel);
+var _userModel2 = _interopRequireDefault(_userModel);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 //-------------------------------Auth MiddleWare-------------------
-var auth = function auth(req, res, next) {
+exports.auth = function (req, res, next) {
     var token = req.header('x-access-token');
     jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
         if (err) {
@@ -40,7 +40,7 @@ exports.signup = function (req, res) {
         contact: req.body.contact
     };
 
-    _seekerKeeperModel2.default.create(userData).then(function (user) {
+    _userModel2.default.create(userData).then(function (user) {
         // create a token
         var token = jwt.sign({
             id: user._id
@@ -58,4 +58,27 @@ exports.signup = function (req, res) {
         });
     });
 };
-//# sourceMappingURL=controller.js.map
+//----------------Login ------------------------------------------
+exports.login = function (req, res) {
+    _userModel2.default.findOne({
+        email: req.body.email
+    }, function (err, user) {
+        if (err) return res.status(500).send('Error on the server.');
+        if (!user) return res.status(404).send('User not found');
+        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if (!passwordIsValid) return res.status(401).send({
+            auth: false,
+            token: null
+        });
+        var token = jwt.sign({
+            id: user._id
+        }, process.env.JWT_SECRET, {
+            expiresIn: 86400
+        });
+        res.status(200).send({
+            auth: true,
+            token: token
+        });
+    });
+};
+//# sourceMappingURL=authController.js.map

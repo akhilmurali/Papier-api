@@ -1,4 +1,3 @@
-
 import Book from '../models/bookModel';
 import User from '../models/userModel';
 var bcrypt = require('bcryptjs');
@@ -50,4 +49,27 @@ exports.signup = function (req, res) {
                 result: 'error'
             });
         });
+}
+//----------------Login ------------------------------------------
+exports.login = function(req, res){
+    User.findOne({
+        email: req.body.email
+    }, function (err, user) {
+        if (err) return res.status(500).send('Error on the server.');
+        if (!user) return res.status(404).send('User not found');
+        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        if (!passwordIsValid) return res.status(401).send({
+            auth: false,
+            token: null
+        });
+        var token = jwt.sign({
+            id: user._id
+        }, process.env.JWT_SECRET, {
+            expiresIn: 86400
+        });
+        res.status(200).send({
+            auth: true,
+            token: token
+        });
+    });
 }
