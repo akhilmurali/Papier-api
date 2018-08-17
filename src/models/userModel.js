@@ -1,7 +1,7 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
-let seekKeepSchema = new Schema({
+let userSchema = new Schema({
     name:{
         type: String,
         required: true,
@@ -34,5 +34,5 @@ let seekKeepSchema = new Schema({
     }
 });
 
-var SeekKeep = mongoose.model('SeekKeep', seekKeepSchema);
-module.exports = SeekKeep;
+var User = mongoose.model('User', userSchema);
+module.exports = User;
