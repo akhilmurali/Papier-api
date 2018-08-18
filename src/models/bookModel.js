@@ -3,7 +3,7 @@ let Schema = mongoose.Schema;
 
 let bookSchema = new Schema({
     isbn: {
-        type: String,
+        type: Number,
         trim: true,
         required: true
     },
@@ -39,5 +39,5 @@ let bookSchema = new Schema({
     }
 });
 
-var Book = mongoose.model('Comment', bookSchema);
+var Book = mongoose.model('Book', bookSchema);
 module.exports = Book;

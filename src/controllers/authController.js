@@ -1,4 +1,3 @@
-import Book from '../models/bookModel';
 import User from '../models/userModel';
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');

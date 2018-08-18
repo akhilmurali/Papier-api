@@ -1,9 +1,5 @@
 'use strict';
 
-var _bookModel = require('../models/bookModel');
-
-var _bookModel2 = _interopRequireDefault(_bookModel);
-
 var _userModel = require('../models/userModel');
 
 var _userModel2 = _interopRequireDefault(_userModel);
