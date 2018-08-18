@@ -4,7 +4,7 @@ import router from './routes/router';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 dotenv.config();
-let port = process.env.PORT || 4000;
+let port = process.env.PORT || 5000;
 let app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

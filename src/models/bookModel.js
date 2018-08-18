@@ -18,5 +18,5 @@ let bookSchema = new Schema({
     }
 });
 
-var Book = mongoose.model('Comment', bookSchema);
+var Book = mongoose.model('Book', bookSchema);
 module.exports = Book;

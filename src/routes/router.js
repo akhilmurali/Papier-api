@@ -1,15 +1,22 @@
 import express from 'express';
-var controller = require('../controllers/authController');
+import controller from '../controllers/authController';
+import uberController from '../controllers/uberControllers';
 let router = express.Router();
 
-
 //----------------------Sign Up----------------------------------------
-router.post('/signup', controller.signup)
+router.post('/signup', controller.signup);
 //-----------------------------Login ----------------------------------
-router.post('/login', controller.login )
+router.post('/login', controller.login );
+//-----------------------------Uber API Routes-------------------------
+router.get('/uber/oauth', uberController.uberOAuth);
 
+router.get('/uber-redirect',uberController.getAccessToken);
 
+router.post('/uber/requests/estimate', uberController.getEstimate);
 
+//-----------------------------Uber API Routes-------------------------
+
+//-------------------------INTEGRATION TEST ROUTES -------------------------------//
 
 router.get('/book', (req, res) => {
     Book.find({})
@@ -39,6 +46,7 @@ router.post('/book', (req, res) => {
                 msg: 'Error inserting book into the database'
             });
         });
-});
+}); 
+//-------------------------INTEGRATION TEST ROUTES -------------------------------//
 
 export default router;
