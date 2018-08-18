@@ -22,11 +22,16 @@ var _dotenv2 = _interopRequireDefault(_dotenv);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var morgan = require('morgan');
+
+var config = require('./config');
 _dotenv2.default.config();
-var port = process.env.PORT || 4000;
+var port = process.env.PORT || 5000;
 var app = (0, _express2.default)();
 app.use(_bodyParser2.default.json());
-app.use(_bodyParser2.default.urlencoded({ extended: true }));
+app.use(_bodyParser2.default.urlencoded({
+    extended: true
+}));
 app.use('/', _router2.default);
 
 _mongoose2.default.Promise = global.Promise;
@@ -36,11 +41,20 @@ var startServer = function startServer() {
         console.log('Server running on port ' + port);
     });
 };
-_mongoose2.default.connect('mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds245661.mlab.com:45661/capstone_db', { useNewUrlParser: true }).then(function () {
+startServer();
+
+_mongoose2.default.connect('mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds245661.mlab.com:45661/capstone_db', {
+    useNewUrlParser: true
+}).then(function () {
     console.log('Connection established to database');
-    startServer();
 }).catch(function (err) {
     console.log(err);
     console.log('Error connecting to mongo db');
 });
+if (config.env == 'test') {
+    //use morgan to log at command line
+    app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
+}
+
+module.exports = app;
 //# sourceMappingURL=index.js.map
