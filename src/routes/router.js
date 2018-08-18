@@ -14,6 +14,8 @@ router.get('/uber-redirect',uberController.getAccessToken);
 
 router.post('/uber/requests/estimate', uberController.getEstimate);
 
+router.post('/uber/requests', uberController.getRide);
+
 //-----------------------------Uber API Routes-------------------------
 
 //-------------------------INTEGRATION TEST ROUTES -------------------------------//
