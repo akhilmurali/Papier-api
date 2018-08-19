@@ -7,7 +7,7 @@ var multer = require('multer');
 let router = express.Router();
 var ejs = require('ejs');
 var fs = require('fs');
-var path = require('path')
+var path = require('path');
 
 var multer = require('multer');
 
@@ -25,8 +25,6 @@ router.post('/login', controller.login)
 router.get('/', function (req, res, next) {
     res.render('index');
 })
-
-//router.use(express.static(__dirname + '../uploads'))
 
 console.log("using path.resolve---", path.resolve('./uploads'));
 router.use(bodyParser.urlencoded({
@@ -49,6 +47,7 @@ var upload = multer({
 
 router.post('/file_upload', upload.single('file'), function (req, res) {
     var bookData = new Book();
+
     //--------cloudinary--------------
     var cloudinary = require('cloudinary');
     cloudinary.config({
@@ -71,15 +70,24 @@ router.post('/file_upload', upload.single('file'), function (req, res) {
             }
             console.log("path2----", pathimages)
             bookData.path = result.url;
-            console.log("image ka path of cloudinary in db", bookData.path)
-            console.log("the url to access", result.url)
+            console.log("image path:cloudinary in db", bookData.path);
+            console.log("the url to access", result.url);
+
+            //-----------------remove image from server----------
+            fs.unlink(pathimages, (err) => {
+                if (err) {
+                    console.log("failed to delete local image:" + err);
+                } else {
+                    console.log('successfully deleted ' + pathimages + ' local image');
+                }
+            });
 
             //----------get the cloudinary URL & save in db-------------
-            console.log("confirm vahi image.path hai ki nai", bookData.path)
+            console.log("confirm image.path", bookData.path)
             bookData.description = req.body.description
             bookData.save(function (err) {
                 if (err) return next(err)
-                return res.redirect('/images')
+                return res.send('ok');
             })
         });
 
@@ -89,8 +97,6 @@ router.post('/file_upload', upload.single('file'), function (req, res) {
 
 //-----------------Get All Books----------------------
 router.get('/getBooks', bookController.getBooks)
-
-
 
 router.post('/addBooks', bookController.addBooks)
 
