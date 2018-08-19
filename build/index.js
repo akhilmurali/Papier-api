@@ -42,7 +42,7 @@ var startServer = function startServer() {
     });
 };
 startServer();
-
+app.set('view engine', 'ejs');
 _mongoose2.default.connect('mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@ds245661.mlab.com:45661/capstone_db', {
     useNewUrlParser: true
 }).then(function () {
@@ -55,6 +55,8 @@ if (config.env == 'test') {
     //use morgan to log at command line
     app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
 }
+
+console.log("end of index.js");
 
 module.exports = app;
 //# sourceMappingURL=index.js.map

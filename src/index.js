@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 var morgan = require('morgan');
 
+
 let config = require('./config');
 dotenv.config();
 let port = process.env.PORT || 5000;
@@ -23,7 +24,7 @@ let startServer = function () {
     });
 }
 startServer();
-
+app.set('view engine', 'ejs')
 mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@ds245661.mlab.com:45661/capstone_db`, {
         useNewUrlParser: true
     })
@@ -38,5 +39,9 @@ if (config.env == 'test') {
     //use morgan to log at command line
     app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
 }
+
+console.log("end of index.js");
+
+
 
 module.exports = app;

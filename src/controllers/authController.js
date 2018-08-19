@@ -1,6 +1,7 @@
 import User from '../models/userModel';
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+
 //-------------------------------Auth MiddleWare-------------------
 exports.auth = (req, res, next) => {
     let token = req.header('x-access-token');

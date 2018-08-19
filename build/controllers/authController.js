@@ -8,6 +8,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+
 //-------------------------------Auth MiddleWare-------------------
 exports.auth = function (req, res, next) {
     var token = req.header('x-access-token');

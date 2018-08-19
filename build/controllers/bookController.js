@@ -4,11 +4,11 @@ var _bookModel = require('../models/bookModel');
 
 var _bookModel2 = _interopRequireDefault(_bookModel);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _router = require('../routes/router');
 
-var multer = require('multer');
-var fs = require('fs');
-var path = require('path');
+var _router2 = _interopRequireDefault(_router);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //-------------------Get All Books-------------------------------
 exports.getBooks = function (req, res) {

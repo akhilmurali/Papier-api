@@ -1,7 +1,5 @@
 import Book from '../models/bookModel';
-var multer = require('multer');
-var fs = require('fs');
-var path = require('path');
+import router from '../routes/router';
 
 //-------------------Get All Books-------------------------------
 exports.getBooks = function (req, res) {
@@ -20,6 +18,7 @@ exports.getBooks = function (req, res) {
 //---------------Add Book --------------------------------------------
 exports.addBooks = function (req, res) {
 
+
     var bookData = {
         name: req.body.name,
         isbn: req.body.isbn,
@@ -27,7 +26,7 @@ exports.addBooks = function (req, res) {
         title: req.body.title,
         author: req.body.author,
         quantity: req.body.quantity,
-       // b64: base64,
+        // b64: base64,
     }
 
 
@@ -45,3 +44,6 @@ exports.addBooks = function (req, res) {
             });
         });
 }
+
+
+

@@ -7,11 +7,11 @@ var bookSchema = new Schema({
     isbn: {
         type: Number,
         trim: true,
-        required: true
+        required: false
     },
     name: {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
     price: {
@@ -20,25 +20,23 @@ var bookSchema = new Schema({
     },
     title: {
         type: String,
-        required: true
+        required: false
     },
+    path: String,
+    description: String,
+
     author: {
-        type: String,
-        required: true
-    },
-    quantity: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    b64: {
         type: String,
         required: false
     },
-    uid: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+    quantity: {
+        type: Number,
+        required: false,
+        default: 0
     }
+}, {
+    collection: 'images'
+
 });
 
 var Book = mongoose.model('Book', bookSchema);
