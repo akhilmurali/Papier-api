@@ -52,7 +52,7 @@ const getEstimate = (req, res) => {
 }
 
 
-const getRide = ((req, res)=>{
+const getRide = (req, res)=>{
     if (req.headers['uber-token'] == '') {
         res.json({ err, msg: 'uber access token not provided' });
     }
@@ -70,6 +70,24 @@ const getRide = ((req, res)=>{
             console.log(err);
             res.status(500).json({err, msg: 'error  retrieving data from uber'});
         });
-});
+};
 
-export default { getAccessToken, uberOAuth, getEstimate, getRide };
+const getCurrentRideStatus = (req, res)=>{
+    if (req.headers['uber-token'] == '') {
+        res.json({ err, msg: 'uber access token not provided' });
+    }
+    let rpOptions = {
+        method: 'GET',
+        uri: `https://sandbox-api.uber.com/v1.2/requests/current?access_token=${req.headers['uber-token']}`
+    };
+    rp(rpOptions)
+        .then((response)=>{
+             res.status(200).json({response});   
+        })
+        .catch((err)=>{
+            console.log(err);
+            res.status(500).json({err, msg: 'error  retrieving data from uber'});
+        });
+}
+
+export default { getAccessToken, uberOAuth, getEstimate, getRide, getCurrentRideStatus };
