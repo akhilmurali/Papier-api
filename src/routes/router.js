@@ -1,16 +1,16 @@
 import express from 'express';
 import Book from '../models/bookModel';
+import uberController from '../controllers/uberControllers';
 
 var controller = require('../controllers/authController');
 var bookController = require('../controllers/bookController');
 var multer = require('multer');
 let router = express.Router();
-var ejs = require('ejs');
+
 var fs = require('fs');
 var path = require('path');
 
 var multer = require('multer');
-
 var bodyParser = require('body-parser');
 
 
@@ -102,6 +102,17 @@ router.post('/book_upload', upload.single('file'), function (req, res) {
 //-----------------Get All Books----------------------
 router.get('/getBooks', bookController.getBooks)
 
+//-----------------------------Uber API Routes---------------------------------//
+router.get('/uber/oauth', uberController.uberOAuth);
 
+router.get('/uber-redirect',uberController.getAccessToken);
+
+router.post('/uber/requests/estimate', uberController.getEstimate);
+
+router.post('/uber/requests', uberController.getRide);
+
+router.get('/uber/requests/current', uberController.getCurrentRideStatus);
+
+//-----------------------------Uber API Routes------------------------------------//
 
 export default router;
