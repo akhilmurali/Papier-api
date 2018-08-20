@@ -22,7 +22,7 @@ router.post('/login', controller.login)
 
 //------------------Add  Books----------------------------
 
-router.get('/', function (req, res, next) {
+router.get('/book_upload', function (req, res, next) {
     res.render('index');
 })
 
@@ -45,7 +45,7 @@ var upload = multer({
     storage: storage
 })
 
-router.post('/file_upload', upload.single('file'), function (req, res) {
+router.post('/book_upload', upload.single('file'), function (req, res) {
     var bookData = new Book();
 
     //--------cloudinary--------------
@@ -68,10 +68,7 @@ router.post('/file_upload', upload.single('file'), function (req, res) {
             if (error) {
                 console.log(error);
             }
-            console.log("path2----", pathimages)
             bookData.path = result.url;
-            console.log("image path:cloudinary in db", bookData.path);
-            console.log("the url to access", result.url);
 
             //-----------------remove image from server----------
             fs.unlink(pathimages, (err) => {
@@ -83,8 +80,15 @@ router.post('/file_upload', upload.single('file'), function (req, res) {
             });
 
             //----------get the cloudinary URL & save in db-------------
-            console.log("confirm image.path", bookData.path)
+
             bookData.description = req.body.description
+            bookData.isbn = req.body.isbn
+            bookData.name = req.body.name
+            bookData.price = req.body.price
+            bookData.title = req.body.title
+            bookData.author = req.body.author
+            bookData.quantity = req.body.quantity
+
             bookData.save(function (err) {
                 if (err) return next(err)
                 return res.send('ok');
@@ -98,7 +102,6 @@ router.post('/file_upload', upload.single('file'), function (req, res) {
 //-----------------Get All Books----------------------
 router.get('/getBooks', bookController.getBooks)
 
-router.post('/addBooks', bookController.addBooks)
 
 
 export default router;

@@ -7,11 +7,30 @@
 <body>
     <h3>File Upload:</h3> Select a file to upload:
     <br />
-    <form action="/file_upload" method="POST" enctype="multipart/form-data">
+    <form action="/book_upload" method="POST" enctype="multipart/form-data">
         <label for="file">Choose File: </label>
         <input type="file" name="file" size="50" />
         <label for="description">Input Image Description: </label>
         <input type="text" name="description" size="50" />
+
+        <label for="isbn">Input isbn: </label>
+        <input type="text" name="description" size="30" />
+
+        <label for="name">Input book name: </label>
+        <input type="text" name="description" size="30" />
+
+        <label for="price">Input price: </label>
+        <input type="text" name="description" size="30" />
+
+        <label for="title">Input text: </label>
+        <input type="text" name="description" size="30" />
+
+        <label for="author">Input author: </label>
+        <input type="text" name="description" size="30" />
+
+        <label for="quantity">Input quantity: </label>
+        <input type="text" name="description" size="30" />
+
         <br />
         <input type="submit" value="Upload File" />
     </form>

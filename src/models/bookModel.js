@@ -20,8 +20,11 @@ let bookSchema = new Schema({
         type: String,
         required: false
     },
-    path:String,
-    description:String,
+    path: {
+        type: String,
+        required: true
+    },
+    description: String,
 
     author: {
         type: String,
@@ -32,9 +35,9 @@ let bookSchema = new Schema({
         required: false,
         default: 0
     },
-},{
-    collection:'images'
-    
+}, {
+    collection: 'books'
+
 });
 
 var Book = mongoose.model('Book', bookSchema);
