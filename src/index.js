@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 var morgan = require('morgan');
 
+var cors = require('cors');
+
 
 let config = require('./config');
 dotenv.config();
@@ -14,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(cors({credentials: true, origin: true}));
 app.use('/', router);
 
 mongoose.Promise = global.Promise;
