@@ -1,7 +1,8 @@
 import User from '../models/userModel';
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
-//-------------------------------Auth MiddleWare-------------------
+
+//-------------------------------Auth MiddleWare-------------------//
 exports.auth = (req, res, next) => {
     let token = req.header('x-access-token');
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
@@ -15,7 +16,7 @@ exports.auth = (req, res, next) => {
     });
 }
 
-//-------------------sign up ----------------------------------
+//-------------------sign up ----------------------------------------//
 
 exports.signup = function (req, res) {
     var hashedPassword = bcrypt.hashSync(req.body.password, 8);
