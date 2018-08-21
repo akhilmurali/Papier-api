@@ -7,7 +7,7 @@ let uber = new Uber({
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
     server_token: process.env.CLIENT_SECRET,
-    redirect_uri: 'http://localhost:5000/uber-redirect',
+    redirect_uri: 'https://fathomless-fortress-14824.herokuapp.com/uber-redirect',
     name: 'Papier',
     language: 'en_US',
     sandbox: true,
