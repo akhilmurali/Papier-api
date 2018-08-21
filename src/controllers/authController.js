@@ -27,7 +27,7 @@ exports.signup = function (req, res) {
         password: hashedPassword,
         address: req.body.address,
         pincode: req.body.pincode,
-        mobile: req.body.phone
+        mobile: req.body.mobile
     }
 
     User.create(userData)

@@ -7,7 +7,6 @@ var morgan = require('morgan');
 
 var cors = require('cors');
 
-
 let config = require('./config');
 dotenv.config();
 let port = process.env.PORT || 5000;

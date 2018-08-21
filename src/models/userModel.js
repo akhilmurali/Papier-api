@@ -24,7 +24,7 @@ let userSchema = new Schema({
         required:true
 
     },
-    contact:{
+    mobile:{
         type:Number,
         required:true
     },
