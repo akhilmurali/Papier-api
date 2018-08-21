@@ -96,8 +96,7 @@ router.post('/book_upload', upload.single('file'), function (req, res) {
         });
 
 
-})
-
+});
 
 //-----------------Get All Books----------------------
 router.get('/getBooks', bookController.getBooks)
