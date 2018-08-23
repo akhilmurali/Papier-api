@@ -44,6 +44,4 @@ if (config.env == 'test') {
 
 console.log("end of index.js");
 
-
-
 module.exports = app;

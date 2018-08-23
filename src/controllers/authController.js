@@ -3,7 +3,7 @@ var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
 //-------------------------------Auth MiddleWare-------------------//
-exports.auth = (req, res, next) => {
+const auth = (req, res, next) => {
     let token = req.header('x-access-token');
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
@@ -18,7 +18,7 @@ exports.auth = (req, res, next) => {
 
 //-------------------sign up ----------------------------------------//
 
-exports.signup = function (req, res) {
+const signup = function (req, res) {
     var hashedPassword = bcrypt.hashSync(req.body.password, 8);
     var userData = {
         name: req.body.name,
@@ -51,7 +51,7 @@ exports.signup = function (req, res) {
         });
 }
 //----------------Login ------------------------------------------
-exports.login = function(req, res){
+const login = function(req, res){
     User.findOne({
         email: req.body.email
     }, function (err, user) {
@@ -73,3 +73,6 @@ exports.login = function(req, res){
         });
     });
 }
+
+export default {auth, signup, login};
+

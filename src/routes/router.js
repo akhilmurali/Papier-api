@@ -1,24 +1,19 @@
 import express from 'express';
 import Book from '../models/bookModel';
 import uberController from '../controllers/uberControllers';
+import bookController from '../controllers/bookController';
+import authController from '../controllers/authController';
+import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
+import bodyParser from 'body-parser';
 
-var controller = require('../controllers/authController');
-var bookController = require('../controllers/bookController');
-var multer = require('multer');
 let router = express.Router();
 
-var fs = require('fs');
-var path = require('path');
-
-var multer = require('multer');
-var bodyParser = require('body-parser');
-
-
 //----------------------Sign Up----------------------------------------
-router.post('/signup', controller.signup)
+router.post('/signup', authController.signup);
 //-----------------------------Login ----------------------------------
-router.post('/login', controller.login)
-
+router.post('/login', authController.login);
 
 //------------------Add  Books----------------------------
 
@@ -29,8 +24,7 @@ router.get('/book_upload', function (req, res, next) {
 console.log("using path.resolve---", path.resolve('./uploads'));
 router.use(bodyParser.urlencoded({
     extended: false
-}))
-
+}));
 
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -98,8 +92,15 @@ router.post('/book_upload', upload.single('file'), function (req, res) {
 
 });
 
-//-----------------Get All Books----------------------
-router.get('/getBooks', bookController.getBooks)
+//-----------------Get All Books--------------------//
+
+router.get('/books', bookController.getBooks);
+
+router.get('/book/:id', bookController.getSingleBook);
+
+// router.get('/book/review/:id', bookController.getReview);
+
+// router.post('book/review/:id', bookController.postReview);
 
 //-----------------------------Uber API Routes---------------------------------//
 router.get('/uber/oauth', uberController.uberOAuth);
