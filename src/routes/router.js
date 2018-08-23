@@ -19,7 +19,7 @@ router.post('/login', authController.login);
 
 router.get('/book_upload', function (req, res, next) {
     res.render('index');
-})
+});
 
 console.log("using path.resolve---", path.resolve('./uploads'));
 router.use(bodyParser.urlencoded({
@@ -33,11 +33,11 @@ var storage = multer.diskStorage({
     filename: function (req, file, callback) {
         callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
     }
-})
+});
 
 var upload = multer({
     storage: storage
-})
+});
 
 router.post('/book_upload', upload.single('file'), function (req, res) {
     var bookData = new Book();
@@ -98,9 +98,9 @@ router.get('/books', bookController.getBooks);
 
 router.get('/book/:id', bookController.getSingleBook);
 
-// router.get('/book/review/:id', bookController.getReview);
+router.get('/book/review/:id', bookController.getReviews);
 
-// router.post('book/review/:id', bookController.postReview);
+router.post('/book/review/:id', bookController.postReview);
 
 //-----------------------------Uber API Routes---------------------------------//
 router.get('/uber/oauth', uberController.uberOAuth);
