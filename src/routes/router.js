@@ -1,12 +1,11 @@
 import express from 'express';
-import Book from '../models/bookModel';
 import uberController from '../controllers/uberControllers';
 import bookController from '../controllers/bookController';
 import authController from '../controllers/authController';
 import multer from 'multer';
-import fs from 'fs';
 import path from 'path';
 import bodyParser from 'body-parser';
+import config from '../config';
 
 let router = express.Router();
 
@@ -16,12 +15,12 @@ router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 
 //------------------Add  Books----------------------------
+if(config.env == 'test'){
+    router.get('/book_upload', function (req, res, next) {
+        res.render('index');
+    });
+}
 
-router.get('/book_upload', function (req, res, next) {
-    res.render('index');
-});
-
-console.log("using path.resolve---", path.resolve('./uploads'));
 router.use(bodyParser.urlencoded({
     extended: false
 }));
@@ -35,62 +34,9 @@ var storage = multer.diskStorage({
     }
 });
 
-var upload = multer({
-    storage: storage
-});
+let upload = multer({  storage: storage });
 
-router.post('/book_upload', upload.single('file'), function (req, res) {
-    var bookData = new Book();
-
-    //--------cloudinary--------------
-    var cloudinary = require('cloudinary');
-    cloudinary.config({
-        cloud_name: process.env.CLOUD_NAME,
-        api_key: process.env.API_KEY,
-        api_secret: process.env.API_SECRET
-    });
-    //----------get the path from server-----------
-    var Originalpath = req.file.filename;
-    console.log("originalpath is ---", Originalpath);
-    console.log("dir name----", __dirname);
-    var pathimages = path.resolve("./uploads/", Originalpath);
-    console.log("path----", pathimages);
-
-    //--------& put it in cloudinary-------
-    cloudinary.v2.uploader.upload(pathimages,
-        function (error, result) {
-            if (error) {
-                console.log(error);
-            }
-            bookData.path = result.url;
-
-            //-----------------remove image from server----------
-            fs.unlink(pathimages, (err) => {
-                if (err) {
-                    console.log("failed to delete local image:" + err);
-                } else {
-                    console.log('successfully deleted ' + pathimages + ' local image');
-                }
-            });
-
-            //----------get the cloudinary URL & save in db-------------
-
-            bookData.description = req.body.description
-            bookData.isbn = req.body.isbn
-            bookData.name = req.body.name
-            bookData.price = req.body.price
-            bookData.title = req.body.title
-            bookData.author = req.body.author
-            bookData.quantity = req.body.quantity
-
-            bookData.save(function (err) {
-                if (err) return next(err)
-                return res.send('ok');
-            })
-        });
-
-
-});
+router.post('/book_upload', upload.single('file'), bookController.upload);
 
 //-----------------Get All Books--------------------//
 

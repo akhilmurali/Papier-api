@@ -12,18 +12,18 @@ let reviewSchema = new Schema({
         default: 0
     },
     description: {
-      type: String,
-      required: true
-    },
-    book_id:{
         type: String,
         required: true
     },
-    title:{
+    book_id: {
+        type: String,
+        required: true
+    },
+    title: {
         type: String,
         required: true
     }
 });
 
-var Review = mongoose.model('Review', reviewSchema);
-module.exports = Review;
+let Review = mongoose.model('Review', reviewSchema);
+export default Review;

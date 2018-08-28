@@ -40,5 +40,5 @@ let bookSchema = new Schema({
 
 });
 
-var Book = mongoose.model('Book', bookSchema);
-module.exports = Book;
+let Book = mongoose.model('Book', bookSchema);
+export default Book;

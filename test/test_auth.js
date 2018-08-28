@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'test';
 let mongoose = require("mongoose");
 let User = require('../build/models/userModel');
 
-//Require the dev-dependencies
+//Require the dev-dependencies:
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../build/index');
@@ -16,9 +16,8 @@ chai.use(chaiHttp);
     it('it should not POST without auth', (done) => {
  
     let user = {
-          email: "emailofkhush",
-          password: "passofkhush"
-
+          email: "khush@gmail.com",
+          password: "khush123"
       }
       chai.request(server)
           .post('/login')
