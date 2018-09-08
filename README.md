@@ -7,4 +7,6 @@ The application is built using MERN stack. JWT's are used for securing and autho
 
 I. To start application locally run 'npm start'
 
-II.To  remotely access the app's api use the heroku link: https://git.heroku.com/fathomless-fortress-14824.git
+II.Link to API deployment on Heoroku: https://fathomless-fortress-14824.herokuapp.com/
+
+
