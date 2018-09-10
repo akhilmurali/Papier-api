@@ -23,7 +23,7 @@ $ npm install
 $ npm start
 ```
 
-Find deployment link here: https://fathomless-fortress-14824.herokuapp.com/
+Find deployment link of the API here: https://fathomless-fortress-14824.herokuapp.com/books
 
 
 
