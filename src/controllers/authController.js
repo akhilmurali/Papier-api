@@ -29,34 +29,44 @@ const signup = function (req, res) {
         pincode: req.body.pincode,
         mobile: req.body.mobile
     }
-
-    User.create(userData)
-        .then(function (user) {
-            // create a token
-            var token = jwt.sign({
-                id: user._id
-            }, process.env.JWT_SECRET, {
-                expiresIn: 86400 // expires in 24 hours
-            });
-            res.status(200).send({
-                auth: true,
-                token: token
-            });
+    User.findOne({email: userData.email})
+        .then((user) => {
+            console.log(user);
+            if (!user) {
+                User.create(userData)
+                    .then(function (user) {
+                        // create a token
+                        var token = jwt.sign({
+                            id: user._id
+                        }, process.env.JWT_SECRET, {
+                                expiresIn: 86400 // expires in 24 hours
+                            });
+                        res.status(200).send({
+                            auth: true,
+                            token: token
+                        });
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        res.json({
+                            result: 'error'
+                        });
+                    });
+            } else {
+                throw new Error('User exists');
+            }
         })
         .catch((err) => {
-            console.log(err);
-            res.json({
-                result: 'error'
-            });
-        });
+            res.status(500).json({err});
+        })
 }
 //----------------Login ------------------------------------------
-const login = function(req, res){
+const login = function (req, res) {
     User.findOne({
         email: req.body.email
     }, function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
-        if (!user) return res.status(404).send('User not found');
+        if (!user) return res.status(404).json({ auth: false, token: null, msg: 'User not found' });
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
         if (!passwordIsValid) return res.status(401).send({
             auth: false,
@@ -65,8 +75,8 @@ const login = function(req, res){
         var token = jwt.sign({
             id: user._id
         }, process.env.JWT_SECRET, {
-            expiresIn: 86400
-        });
+                expiresIn: 86400
+            });
         res.status(200).send({
             auth: true,
             token: token
@@ -74,5 +84,5 @@ const login = function(req, res){
     });
 }
 
-export default {auth, signup, login};
+export default { auth, signup, login };
 

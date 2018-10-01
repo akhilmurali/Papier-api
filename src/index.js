@@ -26,6 +26,7 @@ let startServer = function () {
         console.log('Server running on port ' + config.port);
     });
 }
+
 startServer();
 
 mongoose.connect(process.env.db, { useNewUrlParser: true })
@@ -41,4 +42,4 @@ if (config.env == 'test') {
     app.set('view engine', 'ejs');
 }
 
-export default app;
+module.exports = app;   
