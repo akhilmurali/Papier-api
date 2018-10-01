@@ -31,7 +31,6 @@ const signup = function (req, res) {
     }
     User.findOne({email: userData.email})
         .then((user) => {
-            console.log(user);
             if (!user) {
                 User.create(userData)
                     .then(function (user) {

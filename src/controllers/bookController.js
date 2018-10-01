@@ -3,7 +3,8 @@ import Review from '../models/reviewModel';
 import fs from 'fs';
 
 const getBooks = (req, res) => {
-    Book.find({})
+    req.params.offset ? req.query.offset : req.params.offset = 0;
+    Book.find({}, { skip: req.params.offset }).limit(5)
         .then((books) => {
             res.status(200).json({
                 books
