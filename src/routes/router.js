@@ -9,11 +9,6 @@ import config from '../config';
 
 let router = express.Router();
 
-//----------------------Sign Up----------------------------------------
-router.post('/signup', authController.signup);
-//-----------------------------Login ----------------------------------
-router.post('/login', authController.login);
-
 //------------------Add  Books----------------------------
 if(config.env == 'test'){
     router.get('/book_upload', function (req, res, next) {
@@ -37,6 +32,8 @@ var storage = multer.diskStorage({
 let upload = multer({  storage: storage });
 
 router.post('/book_upload', upload.single('file'), bookController.upload);
+
+router.get('/auth', authController.auth);
 
 //-----------------Get All Books--------------------//
 

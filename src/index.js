@@ -21,12 +21,10 @@ app.use('/', router);
 
 mongoose.Promise = global.Promise;
 
-let startServer = function () {
-    app.listen(config.port, () => {
-        console.log('Server running on port ' + config.port);
-    });
-}
-startServer();
+app.listen(config.port, () => {
+    console.log('Server running on port ' + config.port);
+});
+
 
 mongoose.connect(process.env.db, { useNewUrlParser: true })
     .then(() => {
